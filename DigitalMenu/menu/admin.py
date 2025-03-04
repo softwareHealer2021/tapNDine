@@ -3,4 +3,4 @@ from menu.models import *
 # Register your models here.
 admin.site.register(Items)
 admin.site.register(Specials)
-admin.site.register([Session,Tables])
+admin.site.register([Session,Tables,Categories])

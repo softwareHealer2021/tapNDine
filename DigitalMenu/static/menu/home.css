@@ -66,3 +66,12 @@
       justify-content: center;
       height: 120px;
     }
+
+    .item-image-placeholder {
+        height: 30vh; /* Adjust as needed */
+        background-color: #f8f9fa; /* Optional: Light gray background */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }

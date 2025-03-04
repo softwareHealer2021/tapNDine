@@ -18,6 +18,11 @@ from django.urls import path
 from menu import views as menu
 from kitchen import views as kitchen
 from admins import views as admins
+from django.conf import settings
+from django.conf.urls.static import static
+
+
+
 
 urlpatterns = [
     path('admins/', admin.site.urls),
@@ -28,3 +33,7 @@ urlpatterns = [
     path('kitchen', kitchen.home),
     path('admin/', admins.dashboard),
 ]
+
+# ✅ Serve media files during development
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

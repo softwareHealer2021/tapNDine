@@ -17,6 +17,7 @@
         }
         {% block css %} {% endblock %}
     </style>
+    {% block script_head %}{% endblock %}
 </head>
 <body>
 <div class="container-fluid p-0 d-flex flex-column vh-100">
@@ -62,4 +63,7 @@
   </div>
 
 </body>
+<script>
+    {% block script %}{% endblock %}
+</script>
 </html>

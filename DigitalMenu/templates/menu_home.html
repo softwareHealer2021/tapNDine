@@ -1,82 +1,77 @@
 {% extends 'template.html' %}
 {% block title %}TapNDine-Menu{% endblock %}
 {% block links %}
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'menu/home.css' %}">
+{% load static %}
+<link rel="stylesheet" href="{% static 'menu/home.css' %}">
 {% endblock %}
 {% block body %}
 <div class="flex-grow-1 overflow-auto p-3">
     <!-- Category Tabs -->
     <div class="d-flex overflow-auto mb-3">
-        <button class="btn btn-outline-secondary category-tab active me-2 flex-shrink-0">Today's Specials</button>
-        <button class="btn btn-outline-secondary category-tab me-2 flex-shrink-0">Appetizers</button>
-        <button class="btn btn-outline-secondary category-tab me-2 flex-shrink-0">Main Course</button>
-        <button class="btn btn-outline-secondary category-tab me-2 flex-shrink-0">Sides</button>
-        <button class="btn btn-outline-secondary category-tab me-2 flex-shrink-0">Desserts</button>
-        <button class="btn btn-outline-secondary category-tab me-2 flex-shrink-0">Beverages</button>
+        {% for category in categories %}
+        <button class="category btn btn-outline-secondary category-tab me-2 flex-shrink-0 {% if forloop.first %}active{% endif %}" data-category="{{category}}">{{category}}</button>
+        {% endfor %}
     </div>
 
     <!-- Menu Items -->
     <div class="row g-3">
         <!-- Menu Item 1 -->
-        <div class="col-md-6 col-xl-4">
+        {% for item in items %}
+        <div class="items col-md-4 col-xl-3" data-category="{{item.category}}">
             <div class="card menu-item h-100">
-                <div class="item-image-placeholder">Food Image</div>
+                <div class="item-image-placeholder">
+                    <img src="{{item.url}}" alt="" class="food-img" height="100%" width="100%">
+                </div>
                 <div class="card-body">
-                    <h5 class="card-title">Grilled Salmon</h5>
-                    <p class="card-text">Fresh Atlantic salmon with lemon butter sauce and seasonal vegetables</p>
+                    <h5 class="card-title">{{item.item}}</h5>
+                    <p class="card-text">{{item.description}}</p>
                     <div class="d-flex justify-content-between align-items-center mt-3">
-                        <span class="fs-5 fw-bold">$22.99</span>
-                        <button class="btn btn-primary add-btn">Add to Plate</button>
+                        <span class="fs-5 fw-bold">&#8377;&nbsp;{{item.price}}</span>
+                        <button class="add-btn btn btn-primary" id="{{item.id}}" data-price="{{item.price}}">Add to Plate</button>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- Menu Item 2 -->
-        <div class="col-md-6 col-xl-4">
-            <div class="card menu-item h-100">
-                <div class="item-image-placeholder">Food Image</div>
-                <div class="card-body">
-                    <h5 class="card-title">Truffle Risotto</h5>
-                    <p class="card-text">Creamy Arborio rice with wild mushrooms and truffle oil</p>
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                        <span class="fs-5 fw-bold">$18.99</span>
-                        <button class="btn btn-primary add-btn">Add to Plate</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Menu Item 3 -->
-        <div class="col-md-6 col-xl-4">
-            <div class="card menu-item h-100">
-                <div class="item-image-placeholder">Food Image</div>
-                <div class="card-body">
-                    <h5 class="card-title">Beef Wellington</h5>
-                    <p class="card-text">Tenderloin wrapped in puff pastry with mushroom duxelles</p>
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                        <span class="fs-5 fw-bold">$29.99</span>
-                        <button class="btn btn-primary add-btn">Add to Plate</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Menu Item 4 -->
-        <div class="col-md-6 col-xl-4">
-            <div class="card menu-item h-100">
-                <div class="item-image-placeholder">Food Image</div>
-                <div class="card-body">
-                    <h5 class="card-title">Lobster Bisque</h5>
-                    <p class="card-text">Creamy soup with chunks of lobster and a touch of sherry</p>
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                        <span class="fs-5 fw-bold">$14.99</span>
-                        <button class="btn btn-primary add-btn">Add to Plate</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        {% endfor %}
     </div>
 </div>
+{% endblock %}
+{% block script %}
+    const categories = Array.from(document.getElementsByClassName('category'));
+    const items = Array.from(document.getElementsByClassName('items'));
+    categories.forEach(category => {
+        category.addEventListener('click',function (){
+            categories.forEach(category=>{category.classList.remove('active')});
+            items.forEach(item=>{
+                if(this.getAttribute('data-category')==item.getAttribute("data-category"))
+                    item.style.display = 'block';
+                else
+                    item.style.display = 'none';
+            });
+            category.classList.add('active');
+        });
+    });
+    const btns = Array.from(document.getElementsByClassName('add-btn'));
+    btns.forEach(btn => {
+        btn.addEventListener('click',function(){
+            item = new Object();
+            item.id = this.id;
+            item.qty = 1;
+            item.price = Number(this.getAttribute('data-price'));
+            if(localStorage.getItem('plate') == null){
+                let plate = [];
+                plate.push(item);
+                localStorage.setItem('plate',JSON.stringify(plate));
+            }
+            else{
+                let plate = JSON.parse(localStorage.getItem('plate'));
+                pl = plate.filter(it=>it.id==item.id);
+                console.log(pl);
+                if(pl.length == 0 || pl == undefined)
+                    plate.push(item);
+                localStorage.setItem('plate',JSON.stringify(plate));
+            }
+            btn.innerHTML = "Added to plate";
+        })
+    });
 {% endblock %}

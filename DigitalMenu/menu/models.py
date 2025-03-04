@@ -6,7 +6,7 @@ class Items(models.Model):
     name = models.CharField(max_length=25)
     description = models.TextField()
     price = models.IntegerField(default=0)
-    image = models.ImageField(null=True)
+    image = models.ImageField(upload_to='images/items',null=True)
     category = models.CharField(max_length=25)
 
 class Specials(models.Model):
