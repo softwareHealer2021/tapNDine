@@ -2,22 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="372e0f02-de1d-4acf-807d-1cb5a3937a2b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DigitalMenu/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/DigitalMenu/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DigitalMenu/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/DigitalMenu/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/admin.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/apps.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/migrations/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/models.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/tests.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/views.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kitchen/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kitchen/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/menu/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/menu/admin.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/menu/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/menu/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/menu/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/menu/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

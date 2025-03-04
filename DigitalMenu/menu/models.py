@@ -21,6 +21,9 @@ class Specials(models.Model):
     price = models.IntegerField(default=0)
     image = models.ImageField(null=True)
 
+class Categories(models.Model):
+    category = models.CharField(max_length=25)
+
 
 class Tables(models.Model):
     id = models.AutoField().primary_key
