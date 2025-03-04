@@ -52,14 +52,22 @@
     </div>
 
     <!-- Place Order Button -->
-    <button class="btn btn-primary order-btn w-100 mb-3">Place Order</button>
+    <button onclick="placeOrder();" class="btn btn-primary order-btn w-100 mb-3">Place Order</button>
 </div>
 {% endblock %}
 {% block script %}
     let plate = []
-    if(localStorage.getItem('plate') != null){
-        plate=JSON.parse(localStorage.getItem('plate'));
+    function getPlate(){
+        if(localStorage.getItem('plate') != null){
+            plate=JSON.parse(localStorage.getItem('plate'));
+            return plate;
+        }
+        return [];
     }
+    function setPlate(plate){
+        localStorage.setItem('plate',JSON.stringify(plate));
+    }
+    plate = getPlate();
     const items = Array.from(document.getElementsByClassName('items'));
     function filterItems(){
         items.forEach(item=>{
@@ -95,7 +103,7 @@
                     document.getElementById("qty"+item.id).innerHTML = item.qty;
                 }
             });
-            localStorage.setItem('plate',JSON.stringify(plate));
+            setPlate(plate);
         });
     });
     function calculateTotal(){
@@ -108,6 +116,21 @@
         document.getElementById('sub-total').innerHTML = subtotal;
         document.getElementById('total').innerHTML = Math.round(total);
         document.getElementById('tax').innerHTML = tax;
+    }
+    function placeOrder(){
+        let plate = JSON.parse(localStorage.getItem('plate'));
+        const csrfTokenElement = document.querySelector('input[name="csrfmiddlewaretoken"]');
+        const csrftoken = csrfTokenElement.value;
+        fetch('/kitchen/order',{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json',
+                'X-CSRFToken':csrftoken,
+            },
+            body:JSON.stringify(plate)
+        })
+        .then(response=>response.text())
+        .then(data=>{console.log(data)})
     }
 {% endblock %}
 

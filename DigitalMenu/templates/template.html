@@ -46,7 +46,7 @@
             </a>
           </div>
           <div class="col-3">
-            <a href="/menu/order" class="nav-link text-dark d-flex flex-column align-items-center">
+            <a onclick="/menu/order" class="nav-link text-dark d-flex flex-column align-items-center">
               <div class="navbar-icon"><i class="bi bi-clock-history"></i></div>
               Order Status
             </a>
@@ -61,7 +61,9 @@
       </div>
     </nav>
   </div>
-
+<form>
+    {% csrf_token %}
+</form>
 </body>
 <script>
     {% block script %}{% endblock %}

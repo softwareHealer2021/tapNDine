@@ -3,14 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="372e0f02-de1d-4acf-807d-1cb5a3937a2b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DigitalMenu/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/DigitalMenu/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DigitalMenu/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/DigitalMenu/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/menu/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/menu/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kitchen/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kitchen/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/menu/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/menu/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/menu/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/menu/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/menu/home.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/menu/home.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/menu_home.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/menu_home.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/menu_plate.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/menu_plate.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/template.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template.html" afterDir="false" />
     </list>

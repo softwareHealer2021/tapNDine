@@ -22,8 +22,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 
-
-
 urlpatterns = [
     path('admins/', admin.site.urls),
     path('menu/home', menu.home),
@@ -31,6 +29,7 @@ urlpatterns = [
     path('menu/order', menu.order),
     path('menu/help', menu.help),
     path('kitchen', kitchen.home),
+    path('kitchen/order', kitchen.order),
     path('admin/', admins.dashboard),
 ]
 

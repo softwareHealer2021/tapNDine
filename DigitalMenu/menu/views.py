@@ -42,6 +42,12 @@ def plate(req):
     return render(req,'menu_plate.html',data)
 
 def order(req):
+    import json
+    products = req.body.decode()
+    if products:
+        products = json.loads(products)
+        print(products)
+
     return render(req,'menu_order.html')
 
 def help(req):

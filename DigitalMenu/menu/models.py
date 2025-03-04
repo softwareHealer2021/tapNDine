@@ -30,7 +30,7 @@ class Tables(models.Model):
 
 
 class Session(models.Model):
-    table = models.ForeignKey(Tables,on_delete=models.CASCADE)
+    table = models.IntegerField(default=0)
 
 
 
