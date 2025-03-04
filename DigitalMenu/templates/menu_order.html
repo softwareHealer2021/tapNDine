@@ -1,75 +1,90 @@
 {% extends 'template.html' %}
 {% block title %}TapNDine-Menu{% endblock %}
+{% block links %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'menu/plate.css' %}">
+{% endblock %}
 {% block body %}
 <div class="flex-grow-1 overflow-auto p-3">
-    <!-- Category Tabs -->
-    <div class="d-flex overflow-auto mb-3">
-        <button class="btn btn-outline-secondary category-tab active me-2 flex-shrink-0">Today's Specials</button>
-        <button class="btn btn-outline-secondary category-tab me-2 flex-shrink-0">Appetizers</button>
-        <button class="btn btn-outline-secondary category-tab me-2 flex-shrink-0">Main Course</button>
-        <button class="btn btn-outline-secondary category-tab me-2 flex-shrink-0">Sides</button>
-        <button class="btn btn-outline-secondary category-tab me-2 flex-shrink-0">Desserts</button>
-        <button class="btn btn-outline-secondary category-tab me-2 flex-shrink-0">Beverages</button>
+    <!-- Order Progress -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title mb-3">Your Order #45872</h5>
+
+            <!-- Progress Bar -->
+            <div class="progress mb-4">
+                <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0"
+                     aria-valuemax="100"></div>
+            </div>
+
+            <!-- Progress Steps -->
+            <div class="progress-steps">
+                <div class="row text-center">
+                    <div class="col">
+                        <div class="step-icon completed">✓</div>
+                        <div class="mt-2 small">Received</div>
+                    </div>
+                    <div class="col">
+                        <div class="step-icon completed">✓</div>
+                        <div class="mt-2 small">Confirmed</div>
+                    </div>
+                    <div class="col">
+                        <div class="step-icon active">3</div>
+                        <div class="mt-2 small">Preparing</div>
+                    </div>
+                    <div class="col">
+                        <div class="step-icon pending">4</div>
+                        <div class="mt-2 small">Ready</div>
+                    </div>
+                    <div class="col">
+                        <div class="step-icon pending">5</div>
+                        <div class="mt-2 small">Served</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- Menu Items -->
-    <div class="row g-3">
-        <!-- Menu Item 1 -->
-        <div class="col-md-6 col-xl-4">
-            <div class="card menu-item h-100">
-                <div class="item-image-placeholder">Food Image</div>
-                <div class="card-body">
-                    <h5 class="card-title">Grilled Salmon</h5>
-                    <p class="card-text">Fresh Atlantic salmon with lemon butter sauce and seasonal vegetables</p>
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                        <span class="fs-5 fw-bold">$22.99</span>
-                        <button class="btn btn-primary add-btn">Add to Plate</button>
-                    </div>
+    <!-- Order Items -->
+    <h5 class="mb-3">Your Items</h5>
+
+    <!-- Order Item 1 -->
+    <div class="card mb-3">
+        <div class="card-body p-3">
+            <div class="d-flex">
+                <div class="item-image-placeholder rounded me-3 flex-shrink-0">Food Image</div>
+                <div>
+                    <h5 class="card-title mb-1">Grilled Salmon</h5>
+                    <p class="card-text item-status mb-1">Cooking in progress</p>
+                    <p class="card-text eta mb-0">ETA: 8 minutes</p>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Menu Item 2 -->
-        <div class="col-md-6 col-xl-4">
-            <div class="card menu-item h-100">
-                <div class="item-image-placeholder">Food Image</div>
-                <div class="card-body">
-                    <h5 class="card-title">Truffle Risotto</h5>
-                    <p class="card-text">Creamy Arborio rice with wild mushrooms and truffle oil</p>
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                        <span class="fs-5 fw-bold">$18.99</span>
-                        <button class="btn btn-primary add-btn">Add to Plate</button>
-                    </div>
+    <!-- Order Item 2 -->
+    <div class="card mb-3">
+        <div class="card-body p-3">
+            <div class="d-flex">
+                <div class="item-image-placeholder rounded me-3 flex-shrink-0">Food Image</div>
+                <div>
+                    <h5 class="card-title mb-1">Truffle Risotto (2)</h5>
+                    <p class="card-text item-status mb-1">Preparation started</p>
+                    <p class="card-text eta mb-0">ETA: 12 minutes</p>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Menu Item 3 -->
-        <div class="col-md-6 col-xl-4">
-            <div class="card menu-item h-100">
-                <div class="item-image-placeholder">Food Image</div>
-                <div class="card-body">
-                    <h5 class="card-title">Beef Wellington</h5>
-                    <p class="card-text">Tenderloin wrapped in puff pastry with mushroom duxelles</p>
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                        <span class="fs-5 fw-bold">$29.99</span>
-                        <button class="btn btn-primary add-btn">Add to Plate</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Menu Item 4 -->
-        <div class="col-md-6 col-xl-4">
-            <div class="card menu-item h-100">
-                <div class="item-image-placeholder">Food Image</div>
-                <div class="card-body">
-                    <h5 class="card-title">Lobster Bisque</h5>
-                    <p class="card-text">Creamy soup with chunks of lobster and a touch of sherry</p>
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                        <span class="fs-5 fw-bold">$14.99</span>
-                        <button class="btn btn-primary add-btn">Add to Plate</button>
-                    </div>
+    <!-- Order Item 3 -->
+    <div class="card mb-3">
+        <div class="card-body p-3">
+            <div class="d-flex">
+                <div class="item-image-placeholder rounded me-3 flex-shrink-0">Food Image</div>
+                <div>
+                    <h5 class="card-title mb-1">Sparkling Water (2)</h5>
+                    <p class="card-text item-status mb-1">Ready for service</p>
+                    <p class="card-text eta mb-0">Coming soon</p>
                 </div>
             </div>
         </div>

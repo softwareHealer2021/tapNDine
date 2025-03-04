@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="372e0f02-de1d-4acf-807d-1cb5a3937a2b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/static/admin/add_panel.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/admin/admin.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/admin/dashboard.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/admin/panels.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/kitchen/kitchen.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/menu/home.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/menu/order.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/menu/plate.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/add_panel.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/admin_template.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/kitchen.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/panels.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DigitalMenu/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/DigitalMenu/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DigitalMenu/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/DigitalMenu/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/admin/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kitchen/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/menu/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/menu/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/menu.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/menu_order.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/menu_order.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/menu_plate.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/menu_plate.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/template.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template.html" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="ProjectId" id="2tkhRn1S3JV7P7jFrDI3vM2Gj2O" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/static/admin" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Hp\PycharmProjects\DigitalMenu\DigitalMenu\static\admin" />
+      <recent name="C:\Users\Hp\PycharmProjects\DigitalMenu\DigitalMenu\templates" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Hp\PycharmProjects\DigitalMenu\DigitalMenu\templates" />
+      <recent name="C:\Users\Hp\PycharmProjects\DigitalMenu\DigitalMenu\static\menu" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="372e0f02-de1d-4acf-807d-1cb5a3937a2b" name="Changes" comment="" />
+      <created>1740901973896</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1740901973896</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+</project>

@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 
 def home(req):
-    return render(req,'menu_home.html')
+    return render(req,'menu_home.html',{"item":1})
 
 def plate(req):
     return render(req,'menu_plate.html')

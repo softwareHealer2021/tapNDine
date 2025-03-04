@@ -1,0 +1,96 @@
+:root {
+      --primary-color: #4a6da7;
+      --secondary-color: #f8f9fa;
+      --accent-color: #e67e22;
+    }
+
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Arial', sans-serif;
+    }
+
+    .navbar-bottom {
+      background-color: white;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+    }
+
+    .navbar-icon {
+      font-size: 1.5rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .nav-link.active {
+      color: var(--primary-color) !important;
+      font-weight: bold;
+    }
+
+    .screen-header {
+      background-color: var(--primary-color);
+      color: white;
+    }
+
+    .progress {
+      height: 10px;
+    }
+
+    .progress-bar {
+      background-color: var(--accent-color);
+    }
+
+    .step-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+      color: white;
+      font-weight: bold;
+    }
+
+    .step-icon.completed {
+      background-color: #28a745;
+    }
+
+    .step-icon.active {
+      background-color: var(--accent-color);
+    }
+
+    .step-icon.pending {
+      background-color: #6c757d;
+    }
+
+    .progress-steps {
+      position: relative;
+    }
+
+    .progress-steps:before {
+      content: '';
+      position: absolute;
+      top: 20px;
+      left: 10%;
+      right: 10%;
+      height: 2px;
+      background: #ddd;
+      z-index: -1;
+    }
+
+    .item-image-placeholder {
+      background-color: #ddd;
+      color: #666;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 80px;
+      width: 80px;
+    }
+
+    .item-status {
+      font-weight: 500;
+    }
+
+    .eta {
+      color: var(--accent-color);
+      font-weight: 500;
+    }

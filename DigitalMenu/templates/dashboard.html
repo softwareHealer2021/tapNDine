@@ -1,0 +1,167 @@
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'admin/dashboard.css'%}">
+<div class="container-fluid">
+
+    <!-- First Row - Metrics -->
+    <div class="row mb-4">
+        <!-- Metric 1 -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card metric-card primary h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="card-title mb-1">Earnings (Monthly)</div>
+                            <div class="metric-value">$40,000</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-calendar icon text-primary"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Metric 2 -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card metric-card success h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="card-title mb-1">Earnings (Annual)</div>
+                            <div class="metric-value">$215,000</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-dollar-sign icon text-success"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Metric 3 -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card metric-card info h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="card-title mb-1">Tasks</div>
+                            <div class="metric-value">50%</div>
+                            <div class="progress mt-2" style="height: 5px;">
+                                <div class="progress-bar bg-info" role="progressbar" style="width: 50%"></div>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-clipboard-list icon text-info"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Metric 4 -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card metric-card warning h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="card-title mb-1">Pending Requests</div>
+                            <div class="metric-value">18</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-comments icon text-warning"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Second Row - Chart -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card chart-card mb-4">
+                <div class="card-header">
+                    <h6 class="m-0 font-weight-bold">Earnings Overview</h6>
+                </div>
+                <div class="card-body">
+                    <canvas id="earningsChart" height="320"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+        // Initialize the chart when the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get the chart canvas
+            const ctx = document.getElementById('earningsChart').getContext('2d');
+
+            // Chart data
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            const earnings = [0, 10000, 5000, 15000, 10000, 20000, 15000, 25000, 20000, 30000, 25000, 40000];
+
+            // Create the chart
+            const earningsChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: months,
+                    datasets: [{
+                        label: 'Earnings',
+                        data: earnings,
+                        backgroundColor: 'rgba(78, 115, 223, 0.05)',
+                        borderColor: 'rgba(78, 115, 223, 1)',
+                        pointRadius: 3,
+                        pointBackgroundColor: 'rgba(78, 115, 223, 1)',
+                        pointBorderColor: 'rgba(78, 115, 223, 1)',
+                        pointHoverRadius: 5,
+                        pointHoverBackgroundColor: 'rgba(78, 115, 223, 1)',
+                        pointHoverBorderColor: 'rgba(78, 115, 223, 1)',
+                        pointHitRadius: 10,
+                        pointBorderWidth: 2,
+                        tension: 0.3,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + value.toLocaleString();
+                                }
+                            },
+                            grid: {
+                                borderDash: [2],
+                                drawBorder: false,
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false,
+                                drawBorder: false
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return '$' + context.parsed.y.toLocaleString();
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
