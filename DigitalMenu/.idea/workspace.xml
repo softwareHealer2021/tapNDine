@@ -2,27 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="372e0f02-de1d-4acf-807d-1cb5a3937a2b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/static/admin/add_panel.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/admin/admin.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/admin/dashboard.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/admin/panels.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/kitchen/kitchen.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/menu/home.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/menu/order.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/menu/plate.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/add_panel.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/admin_template.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/kitchen.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/panels.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DigitalMenu/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/DigitalMenu/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DigitalMenu/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/DigitalMenu/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/admin/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kitchen/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/menu/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/menu/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/menu.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/menu_order.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/menu_order.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/menu_plate.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/menu_plate.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/template.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/template.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/admin.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/apps.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/migrations/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/views.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kitchen/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kitchen/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/menu/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/menu/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/menu/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/menu/models.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,7 +52,7 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/static/admin" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">

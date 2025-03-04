@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6a8a9c9d-c64e-4f7b-8de8-72fe78ee8864" name="Changes" comment="" />
+    <list default="true" id="6a8a9c9d-c64e-4f7b-8de8-72fe78ee8864" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/DigitalMenu/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/DigitalMenu/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -62,5 +64,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
