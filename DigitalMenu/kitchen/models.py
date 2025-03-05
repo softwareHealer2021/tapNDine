@@ -7,7 +7,7 @@ class Order(models.Model):
     session = models.IntegerField(default=0)
     amount = models.IntegerField(default=0)
     status = models.CharField(max_length=10,default='in queue')
-    date = models.DateField(auto_created=True)
+    date = models.DateField(auto_now_add=True)
 
 class OrderItem(models.Model):
     item = models.IntegerField(default=0)

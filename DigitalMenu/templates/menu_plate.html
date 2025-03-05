@@ -119,6 +119,7 @@
     }
     function placeOrder(){
         let plate = JSON.parse(localStorage.getItem('plate'));
+        let table = 7;
         const csrfTokenElement = document.querySelector('input[name="csrfmiddlewaretoken"]');
         const csrftoken = csrfTokenElement.value;
         fetch('/kitchen/order',{
@@ -127,10 +128,11 @@
                 'Content-Type':'application/json',
                 'X-CSRFToken':csrftoken,
             },
-            body:JSON.stringify(plate)
+            body:JSON.stringify({'plate':plate,'table':table})
         })
         .then(response=>response.text())
         .then(data=>{console.log(data)})
+        window.location.replace('/menu/order');
     }
 {% endblock %}
 
