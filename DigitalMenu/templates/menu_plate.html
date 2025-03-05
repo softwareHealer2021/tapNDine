@@ -117,22 +117,33 @@
         document.getElementById('total').innerHTML = Math.round(total);
         document.getElementById('tax').innerHTML = tax;
     }
-    function placeOrder(){
-        let plate = JSON.parse(localStorage.getItem('plate'));
-        let table = 7;
-        const csrfTokenElement = document.querySelector('input[name="csrfmiddlewaretoken"]');
-        const csrftoken = csrfTokenElement.value;
-        fetch('/kitchen/order',{
-            method:'POST',
-            headers:{
-                'Content-Type':'application/json',
-                'X-CSRFToken':csrftoken,
+    async function placeOrder() {
+    let order;
+    let plate = JSON.parse(localStorage.getItem('plate'));
+    let table = Number(document.getElementById('table').innerHTML);
+    const csrfTokenElement = document.querySelector('input[name="csrfmiddlewaretoken"]');
+    const csrftoken = csrfTokenElement.value;
+
+    try {
+        const response = await fetch('/kitchen/order', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken,
             },
-            body:JSON.stringify({'plate':plate,'table':table})
-        })
-        .then(response=>response.text())
-        .then(data=>{console.log(data)})
-        window.location.replace('/menu/order');
+            body: JSON.stringify({'plate': plate, 'table': table}),
+        });
+
+        const data = await response.text();  // Assuming response is just text
+        order = Number(data);  // Convert the response to a number
+
+        // Clear localStorage and navigate after order is received
+        localStorage.clear();
+        window.location.replace('/menu/order?t=' + table + '&o=' + order);  // Make sure to add the '&' between query params
+    } catch (error) {
+        console.error("Error placing the order:", error);
     }
+}
+
 {% endblock %}
 

@@ -28,9 +28,9 @@ class Categories(models.Model):
 class Tables(models.Model):
     id = models.AutoField().primary_key
 
-
-class Session(models.Model):
-    table = models.IntegerField(default=0)
+#future enhancements
+# class Session(models.Model):
+    # table = models.IntegerField(default=0)
 
 
 

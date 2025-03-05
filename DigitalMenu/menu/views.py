@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import Categories,Items
+from kitchen.models import Order,OrderItem
 # Create your views here.
 
 def home(req):
@@ -42,13 +43,26 @@ def plate(req):
     return render(req,'menu_plate.html',data)
 
 def order(req):
-    import json
-    products = req.body.decode()
-    if products:
-        products = json.loads(products)
-        print(products)
-
-    return render(req,'menu_order.html')
+    if not 't' in req.GET:
+        return render(req,'menu_order.html')
+    table = int(req.GET.get('t'))
+    order_id = int(req.GET.get('o'))
+    order = Order.objects.get(table=table,id=order_id)
+    order_items = OrderItem.objects.filter(order=order.id)
+    data = {
+        'order':{},
+        'items':[]
+    }
+    data['order']['amount'] = order.amount
+    data['order']['status'] = order.status
+    for x in order_items:
+        item = Items.objects.get(id=x.item)
+        data['items'].append({
+            "name":item.name,
+            "qty":x.quantity,
+            "url":item.image.url,
+        })
+    return render(req,'menu_order.html',data)
 
 def help(req):
     return render(req,'menu_plate.html')

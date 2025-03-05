@@ -1,10 +1,10 @@
 from django.db import models
-from menu.models import Session
+# from menu.models import Session
 import datetime
 # Create your models here.
 class Order(models.Model):
     id = models.AutoField().primary_key
-    session = models.IntegerField(default=0)
+    table = models.IntegerField(default=0)
     amount = models.IntegerField(default=0)
     status = models.CharField(max_length=10,default='in queue')
     date = models.DateField(auto_now_add=True)

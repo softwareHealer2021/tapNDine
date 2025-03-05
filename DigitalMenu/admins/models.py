@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class Panels(models.Model):
-    user = models.CharField(max_length=25).primary_key
+    user = models.CharField(max_length=25,null=True)
     upass = models.CharField(max_length=50)
 
 class Metrics(models.Model):

@@ -1,10 +1,23 @@
 from django.shortcuts import render
 from .models import Order,OrderItem,Queue,Processing,Bill
-from menu.models import Session,Items,Tables
+from admins.models import Panels
+from menu.models import Items,Tables
 # Create your views here.
 def home(req):
-    queue = list(Queue.objects.all())
-    print(queue)
+    queue = Queue.objects.values('order_id')
+    queue = list(queue)
+    queue.reverse()
+    if not len(Processing.objects.all()):
+        live = queue.pop()
+        Queue.objects.filter(order_id=live['order_id']).delete()
+        current=Processing(order_id=live['order_id'])
+        current.save()
+    else:
+        current = Processing.objects.all()
+        current = current[0]
+    data = {
+
+    }
     return render(req,'kitchen.html')
 
 def order(req):
@@ -13,16 +26,19 @@ def order(req):
     products = req.body.decode()
     if products:
         products = json.loads(products)
-        Session(table=6).save()
-        session = Session.objects.get(table=2)
+        # Session(table=products['table']).save()
+        # session = Session.objects.get(table=products['table'])
+        table = products['table']
         amount = 0
-        for x in products:
+        for x in products['plate']:
             item = Items.objects.get(id=x['id'])
             amount += (item.price*x['qty'])
-        order = Order(session=session.table, amount=amount)
+        order = Order(table=table, amount=amount)
         order.save()
-        for x in products:
+        order_id = order.id
+        for x in products['plate']:
             item = Items.objects.get(id=x['id'])
-            OrderItem(item= item.id,order = order.id,quantity = x['qty'])
+            OrderItem(item= item.id,order = order.id,quantity = x['qty']).save()
         Queue(order_id=order.id).save()
-        return HttpResponse("Success")
+        return HttpResponse(order_id)
+    return HttpResponse("")
