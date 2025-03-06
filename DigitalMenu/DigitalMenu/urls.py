@@ -30,6 +30,7 @@ urlpatterns = [
     path('menu/help', menu.help),
     path('kitchen', kitchen.home),
     path('kitchen/order', kitchen.order),
+    path('kitchen/order/complete', kitchen.complete_order),
     path('admin/', admins.dashboard),
 ]
 

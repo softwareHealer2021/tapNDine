@@ -2,10 +2,14 @@ from django.shortcuts import render
 from .models import Order,OrderItem,Queue,Processing,Bill
 from admins.models import Panels
 from menu.models import Items,Tables
+from django.http import HttpResponse
+
 # Create your views here.
 def home(req):
     queue = Queue.objects.values('order_id')
     queue = list(queue)
+    if not queue:
+        return render(req,'kitchen.html')
     queue.reverse()
     if not len(Processing.objects.all()):
         live = queue.pop()
@@ -16,13 +20,31 @@ def home(req):
         current = Processing.objects.all()
         current = current[0]
     data = {
-
+        'queue':[],
+        "current":[],
+        "current_table":Order(id=current.order_id).table,
+        "current_id":current.order_id,
+        "orders":len(queue),
     }
-    return render(req,'kitchen.html')
+    for x in queue:
+        items = len(OrderItem.objects.filter(order=x['order_id']))
+        table = Order.objects.get(id=x['order_id']).table
+        data['queue'].append({
+            'id':x['order_id'],
+            'count':items,
+            'table':table,
+        })
+    order_items = OrderItem.objects.filter(order=current.order_id)
+    for x in order_items:
+        item = Items.objects.get(id=x.item)
+        data['current'].append({
+            'name':item.name,
+            'url':item.image.url,
+        })
+    return render(req,'kitchen.html',data)
 
 def order(req):
     import json
-    from django.http import HttpResponse
     products = req.body.decode()
     if products:
         products = json.loads(products)
@@ -42,3 +64,7 @@ def order(req):
         Queue(order_id=order.id).save()
         return HttpResponse(order_id)
     return HttpResponse("")
+
+def complete_order(req):
+    Processing.objects.all().delete()
+    return HttpResponse("Success")
