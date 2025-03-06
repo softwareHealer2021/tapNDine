@@ -11,11 +11,11 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="card-title mb-1">Earnings (Monthly)</div>
-                            <div class="metric-value">$40,000</div>
+                            <div class="card-title mb-1">Earnings</div>
+                            <div class="metric-value">{{total_earnings}}</div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-calendar icon text-primary"></i>
+                            <i class="fas icon text-primary">&#8377;</i>
                         </div>
                     </div>
                 </div>
@@ -28,11 +28,11 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="card-title mb-1">Earnings (Annual)</div>
-                            <div class="metric-value">$215,000</div>
+                            <div class="card-title mb-1">Total Orders</div>
+                            <div class="metric-value">{{total_orders}}</div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-dollar-sign icon text-success"></i>
+                            <i class="fas fa-clipboard-list icon text-success"></i>
                         </div>
                     </div>
                 </div>
@@ -45,14 +45,11 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="card-title mb-1">Tasks</div>
-                            <div class="metric-value">50%</div>
-                            <div class="progress mt-2" style="height: 5px;">
-                                <div class="progress-bar bg-info" role="progressbar" style="width: 50%"></div>
-                            </div>
+                            <div class="card-title mb-1">Panels</div>
+                            <div class="metric-value">{{total_panels}}</div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-clipboard-list icon text-info"></i>
+                            <i class="fas fa-cogs icon text-info"></i>
                         </div>
                     </div>
                 </div>
@@ -65,16 +62,18 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="card-title mb-1">Pending Requests</div>
-                            <div class="metric-value">18</div>
+                            <div class="card-title mb-1">Items</div>
+                            <div class="metric-value">{{total_items}}</div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-comments icon text-warning"></i>
+                            <i class="fas fa-box icon text-warning"></i>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+
     </div>
 
     <!-- Second Row - Chart -->

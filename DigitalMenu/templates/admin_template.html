@@ -47,7 +47,7 @@
 <div class="main-content">
     <header class="header">
         <div class="container-fluid">
-            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+            <h1 class="h3 mb-0 text-gray-800"></h1>
         </div>
     </header>
     <div class="content-area">
@@ -63,7 +63,9 @@
         </div>
     </div>
 </div>
-
+    <form>
+        {% csrf_token %}
+    </form>
 </body>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
@@ -83,6 +85,7 @@
 
             if (contentDiv) {
                 contentDiv.style.display = 'block';
+                document.querySelector('.header h1').innerHTML = targetTab.split('-').map(word=>word[0].toUpperCase()+word.slice(1)).join(' ');
             }
         });
     });
@@ -101,6 +104,7 @@
 
     // Set default tab on page load
     document.getElementById('dashboard').style.display = 'block';
+    document.querySelector('.header h1').innerHTML = 'Dashboard';
 });
 
 </script>

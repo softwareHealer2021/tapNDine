@@ -31,7 +31,9 @@ urlpatterns = [
     path('kitchen', kitchen.home),
     path('kitchen/order', kitchen.order),
     path('kitchen/order/complete', kitchen.complete_order),
-    path('admin/', admins.dashboard),
+    path('admin/', admins.admin_render),
+    path('admin/add_staff', admins.admin_add_staff),
+    path('admin/delete_panel', admins.admin_delete_panel),
 ]
 
 # ✅ Serve media files during development

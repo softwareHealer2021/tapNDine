@@ -1,3 +1,5 @@
+import datetime
+
 from django.shortcuts import render
 from .models import Order,OrderItem,Queue,Processing,Bill
 from admins.models import Panels
@@ -55,7 +57,8 @@ def order(req):
         for x in products['plate']:
             item = Items.objects.get(id=x['id'])
             amount += (item.price*x['qty'])
-        order = Order(table=table, amount=amount)
+        month, year = str(datetime.datetime.now().strftime('%B'))[:3], datetime.datetime.now().year
+        order = Order(table=table, amount=amount,month=month,year=year)
         order.save()
         order_id = order.id
         for x in products['plate']:

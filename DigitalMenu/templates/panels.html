@@ -1,123 +1,69 @@
-
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'admin/panels.css'%}">
-    <div class="container-fluid">
-        <div class="list-header">
-            <h2>Staff List</h2>
-            <button class="btn btn-primary btn-add" onclick="redirectToAddStaff()">
-                <i class="fas fa-plus"></i> Add Staff
-            </button>
-        </div>
-
-        <div id="staffList" class="staff-list">
-            <!-- Staff cards will be added here dynamically -->
-        </div>
-
-        <!-- Empty state when no staff is available -->
-        <div id="emptyState" class="empty-state" style="display: none;">
-            <div class="empty-icon">
-                <i class="fas fa-users-slash"></i>
-            </div>
-            <h4>No Staff Members</h4>
-            <p>Start by adding your first staff member</p>
-            <button class="btn btn-outline-primary mt-3" onclick="redirectToAddStaff()">
-                Add Staff Member
-            </button>
-        </div>
+{% load static %}
+<link rel="stylesheet" href="{% static 'admin/panels.css'%}">
+<div class="container-fluid">
+    <div class="list-header">
+        <h2>Staff List</h2>
+        <button class="btn btn-primary btn-add" onclick="redirectToAddStaff()">
+            <i class="fas fa-plus"></i> Add Staff
+        </button>
     </div>
 
-    <!-- Confirmation modal for deleting staff -->
-    <div id="confirmDelete" class="confirm-delete">
-        <div class="confirm-box">
-            <i class="fas fa-exclamation-triangle text-warning mb-3" style="font-size: 2rem;"></i>
-            <h4>Confirm Deletion</h4>
-            <p>Are you sure you want to delete this staff member?</p>
-            <p class="text-danger">This action cannot be undone.</p>
-            <div class="confirm-actions">
-                <button id="cancelDelete" class="btn btn-secondary">Cancel</button>
-                <button id="confirmDeleteBtn" class="btn btn-danger">Delete</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Bootstrap and jQuery JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-
-    <script>
-        // Sample data - in a real application, you would fetch this from your backend
-        let staffMembers = [
-            { id: 1, email: "john.doe@example.com", role: "Admin" },
-            { id: 2, email: "jane.smith@example.com", role: "User" },
-            { id: 3, email: "mark.johnson@example.com", role: "Admin" }
-        ];
-
-        let staffToDelete = null; // Store the ID of staff to delete
-
-        // Initialize the page
-        $(document).ready(function() {
-            renderStaffList();
-            setupEventListeners();
-        });
-
-        // Render the staff list
-        function renderStaffList() {
-            const staffListElement = $('#staffList');
-            staffListElement.empty();
-
-            if (staffMembers.length === 0) {
-                $('#emptyState').show();
-                return;
-            }
-
-            $('#emptyState').hide();
-
-            staffMembers.forEach(staff => {
-                const initials = getInitials(staff.email);
-
-                const staffCard = `
-                    <div class="staff-card p-3 fade-in" data-id="${staff.id}">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="email-container">
-                                <div class="avatar">${initials}</div>
-                                <div>
-                                    <div class="fw-bold">${staff.email}</div>
-                                    <div class="text-muted small">${staff.role}</div>
-                                </div>
-                            </div>
-                            <button class="delete-btn" data-id="${staff.id}">
-                                <i class="fas fa-trash-alt fa-lg"></i>
-                            </button>
-                        </div>
+    <div id="staffList" class="staff-list">
+        {% for panel in panels %}
+        <div class="staff-card p-3 fade-in" data-id="{{panel.user}}">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="email-container">
+                    <div class="avatar"></div>
+                    <div>
+                        <div class="fw-bold">{{panel.user}}</div>
+                        <div class="text-muted small">{{panel.pass}}</div>
                     </div>
-                `;
+                </div>
+                <button onclick="showDeleteConfirmation(this)" class="delete-btn" data-id="{{panel.user}}">
+                    <i class="fas fa-trash-alt fa-lg"></i>
+                </button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 
-                staffListElement.append(staffCard);
-            });
+    <!-- Empty state when no staff is available -->
+    <div id="emptyState" class="empty-state" style="display: none;">
+        <div class="empty-icon">
+            <i class="fas fa-users-slash"></i>
+        </div>
+        <h4>No Staff Members</h4>
+        <p>Start by adding your first staff member</p>
+        <button class="btn btn-outline-primary mt-3" onclick="redirectToAddStaff()">
+            Add Staff Member
+        </button>
+    </div>
+</div>
 
-            // Add click handlers for delete buttons
-            $('.delete-btn').click(function() {
-                const staffId = $(this).data('id');
-                showDeleteConfirmation(staffId);
-            });
-        }
+<!-- Confirmation modal for deleting staff -->
+<div id="confirmDelete" class="confirm-delete">
+    <div class="confirm-box">
+        <i class="fas fa-exclamation-triangle text-warning mb-3" style="font-size: 2rem;"></i>
+        <h4>Confirm Deletion</h4>
+        <p>Are you sure you want to delete this staff member?</p>
+        <p class="text-danger">This action cannot be undone.</p>
+        <div class="confirm-actions">
+            <button id="cancelDelete" class="btn btn-secondary">Cancel</button>
+            <button id="confirmDeleteBtn" class="btn btn-danger">Delete</button>
+        </div>
+    </div>
+</div>
 
-        // Get initials from email
-        function getInitials(email) {
-            const name = email.split('@')[0].replace(/[^a-zA-Z ]/g, "");
-            const parts = name.split('.');
+<!-- Bootstrap and jQuery JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
-            if (parts.length >= 2) {
-                return (parts[0].charAt(0) + parts[1].charAt(0)).toUpperCase();
-            } else {
-                return name.charAt(0).toUpperCase();
-            }
-        }
-
+<script>
         // Show delete confirmation
         function showDeleteConfirmation(staffId) {
-            staffToDelete = staffId;
+            staffToDelete = staffId.getAttribute('data-id');
             $('#confirmDelete').fadeIn(200);
+            setupEventListeners();
         }
 
         // Setup global event listeners
@@ -139,14 +85,18 @@
 
         // Delete a staff member
         function deleteStaff(staffId) {
-            const staffCard = $(`.staff-card[data-id="${staffId}"]`);
-            staffCard.addClass('fade-out');
-
-            setTimeout(() => {
-                // In a real application, you would send a DELETE request to your API
-                staffMembers = staffMembers.filter(staff => staff.id !== staffId);
-                renderStaffList();
-            }, 300);
+            const csrfTokenElement = document.querySelector('input[name="csrfmiddlewaretoken"]');
+            const csrftoken = csrfTokenElement.value;
+            fetch('/admin/delete_panel',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken,
+                },
+                body: JSON.stringify({'panel':staffId})
+            })
+            .then(response=> response.text())
+            .then(data=>console.log(data))
         }
 
         // Redirect to add staff page
@@ -155,4 +105,5 @@
             alert("In a real application, this would redirect to the Add Staff form.");
             // window.location.href = 'add-staff.html';
         }
-    </script>
+
+</script>

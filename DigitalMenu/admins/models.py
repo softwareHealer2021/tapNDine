@@ -6,7 +6,7 @@ class Panels(models.Model):
     upass = models.CharField(max_length=50)
 
 class Metrics(models.Model):
-    orders = models.IntegerField()
-    daily = models.IntegerField()
-    panels = models.IntegerField()
-    items = models.IntegerField()
+    orders = models.IntegerField(default=0)
+    panels = models.IntegerField(default=0)
+    items = models.IntegerField(default=0)
+    earnings = models.IntegerField(default=0)

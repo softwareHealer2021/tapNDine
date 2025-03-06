@@ -8,6 +8,8 @@ class Order(models.Model):
     amount = models.IntegerField(default=0)
     status = models.CharField(max_length=10,default='in queue')
     date = models.DateField(auto_now_add=True)
+    month = models.CharField(max_length=10,default=0)
+    year = models.IntegerField(default=0)
 
 class OrderItem(models.Model):
     item = models.IntegerField(default=0)
