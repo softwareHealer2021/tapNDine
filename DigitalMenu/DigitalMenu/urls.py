@@ -20,11 +20,12 @@ from kitchen import views as kitchen
 from admins import views as admins
 from django.conf import settings
 from django.conf.urls.static import static
-
+from . import views as login
 
 urlpatterns = [
     path('admins/', admin.site.urls),
     path('menu/home', menu.home),
+    path('', login.login),
     path('menu/plate', menu.plate),
     path('menu/order', menu.order),
     path('menu/help', menu.help),

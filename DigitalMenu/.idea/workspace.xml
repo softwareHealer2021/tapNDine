@@ -2,18 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="372e0f02-de1d-4acf-807d-1cb5a3937a2b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/DigitalMenu/views.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/login.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DigitalMenu/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/DigitalMenu/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admins/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/admins/admin.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admins/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/admins/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admins/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/admins/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kitchen/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kitchen/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/kitchen/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/admin/panels.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/admin/panels.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/add_panel.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/add_panel.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin_template.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin_template.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/dashboard.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/panels.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/panels.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,6 +19,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="HTML File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -48,7 +44,7 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../pythonProject1/dproject/ExProject" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
