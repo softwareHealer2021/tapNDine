@@ -1,166 +1,269 @@
-
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'admin/dashboard.css'%}">
+{% load static %}
+<link rel="stylesheet" href="{% static 'admin/dashboard.css'%}" />
 <div class="container-fluid">
-
-    <!-- First Row - Metrics -->
-    <div class="row mb-4">
-        <!-- Metric 1 -->
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card metric-card primary h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="card-title mb-1">Earnings</div>
-                            <div class="metric-value">{{total_earnings}}</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas icon text-primary">&#8377;</i>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <div class="row mb-3">
+    <div class="col-12">
+      <div class="card p-3">
+        <div class="d-flex justify-content-between align-items-center">
+          <h5 class="m-0">View Period</h5>
+          <div class="btn-group" role="group">
+            <button
+              type="button"
+              class="btn btn-primary yr-selector active"
+              data-period="{{ current_year }}"
+            >
+              {{ current_year }}
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-primary yr-selector"
+              data-period="{{ last_year }}"
+            >
+              {{ last_year }}
+            </button>
+          </div>
         </div>
+      </div>
+    </div>
+  </div>
 
-        <!-- Metric 2 -->
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card metric-card success h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="card-title mb-1">Total Orders</div>
-                            <div class="metric-value">{{total_orders}}</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-clipboard-list icon text-success"></i>
-                        </div>
-                    </div>
-                </div>
+  <div class="row mb-4">
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card metric-card primary h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="card-title mb-1">Revenue</div>
+              <div class="metric-value" id="revenue-display">
+                ₹{{ total_earnings }}
+              </div>
             </div>
-        </div>
-
-        <!-- Metric 3 -->
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card metric-card info h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="card-title mb-1">Panels</div>
-                            <div class="metric-value">{{total_panels}}</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-cogs icon text-info"></i>
-                        </div>
-                    </div>
-                </div>
+            <div class="col-auto">
+              <i class="fas icon text-primary">&#8377;</i>
             </div>
+          </div>
         </div>
-
-        <!-- Metric 4 -->
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card metric-card warning h-100 py-2">
-                <div class="card-body">
-                    <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                            <div class="card-title mb-1">Items</div>
-                            <div class="metric-value">{{total_items}}</div>
-                        </div>
-                        <div class="col-auto">
-                            <i class="fas fa-box icon text-warning"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
+      </div>
     </div>
 
-    <!-- Second Row - Chart -->
-    <div class="row">
-        <div class="col-12">
-            <div class="card chart-card mb-4">
-                <div class="card-header">
-                    <h6 class="m-0 font-weight-bold">Earnings Overview</h6>
-                </div>
-                <div class="card-body">
-                    <canvas id="earningsChart" height="320"></canvas>
-                </div>
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card metric-card success h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="card-title mb-1">Transactions</div>
+              <div class="metric-value" id="order-display">
+                {{ total_orders }}
+              </div>
             </div>
+            <div class="col-auto">
+              <i class="fas fa-clipboard-list icon text-success"></i>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card metric-card info h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="card-title mb-1">Sections</div>
+              <div class="metric-value" id="panel-display">
+                {{ total_panels }}
+              </div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-cogs icon text-info"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card metric-card warning h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="card-title mb-1">Products</div>
+              <div class="metric-value" id="item-display">
+                {{ total_items }}
+              </div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-box icon text-warning"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card chart-card mb-4">
+        <div class="card-header">
+          <h6 class="m-0 font-weight-bold">
+            Financial Performance
+            <span id="period-display">{{ current_year }}</span>
+          </h6>
+        </div>
+        <div class="card-body">
+          <canvas id="financeChart" height="320"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-        // Initialize the chart when the DOM is fully loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            // Get the chart canvas
-            const ctx = document.getElementById('earningsChart').getContext('2d');
+  document.addEventListener("DOMContentLoaded", function () {
+    // Get data from Django context
+    const monthlyData = {{ monthly_data|safe }};
 
-            // Chart data
-            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-            const earnings = [0, 10000, 5000, 15000, 10000, 20000, 15000, 25000, 20000, 30000, 25000, 40000];
+    const currentYear = "{{ current_year }}";
+    const lastYear = "{{ last_year }}";
 
-            // Create the chart
-            const earningsChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: months,
-                    datasets: [{
-                        label: 'Earnings',
-                        data: earnings,
-                        backgroundColor: 'rgba(78, 115, 223, 0.05)',
-                        borderColor: 'rgba(78, 115, 223, 1)',
-                        pointRadius: 3,
-                        pointBackgroundColor: 'rgba(78, 115, 223, 1)',
-                        pointBorderColor: 'rgba(78, 115, 223, 1)',
-                        pointHoverRadius: 5,
-                        pointHoverBackgroundColor: 'rgba(78, 115, 223, 1)',
-                        pointHoverBorderColor: 'rgba(78, 115, 223, 1)',
-                        pointHitRadius: 10,
-                        pointBorderWidth: 2,
-                        tension: 0.3,
-                        fill: true
-                    }]
+    // Create analytics data structure
+    const analyticsData = {
+      [lastYear]: {
+        monthlyData: monthlyData[lastYear],
+        revenueFigure: "₹" + calculateTotalRevenue(monthlyData[lastYear]),
+        transactionCount: "{{ previous_year_orders|default:'0' }}",
+        sectionCount: "{{ previous_year_panels|default:'0' }}",
+        productCount: "{{ previous_year_items|default:'0' }}",
+      },
+      [currentYear]: {
+        monthlyData: monthlyData[currentYear],
+        revenueFigure: "₹" + calculateTotalRevenue(monthlyData[currentYear]),
+        transactionCount: "{{ total_orders }}",
+        sectionCount: "{{ total_panels }}",
+        productCount: "{{ total_items }}",
+      },
+    };
+
+    function calculateTotalRevenue(monthlyData) {
+      return monthlyData.reduce((sum, current) => sum + current, 0).toLocaleString();
+    }
+
+    const revenueElement = document.getElementById("revenue-display");
+    const orderElement = document.getElementById("order-display");
+    const panelElement = document.getElementById("panel-display");
+    const itemElement = document.getElementById("item-display");
+    const periodElement = document.getElementById("period-display");
+    const yearButtons = document.querySelectorAll(".yr-selector");
+
+    const vizCanvas = document.getElementById("financeChart").getContext("2d");
+    const timePeriods = [
+      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
+    let selectedPeriod = currentYear;
+    let visualChart;
+
+    function refreshInterface(period) {
+      revenueElement.textContent = analyticsData[period].revenueFigure;
+      orderElement.textContent = analyticsData[period].transactionCount;
+      panelElement.textContent = analyticsData[period].sectionCount;
+      itemElement.textContent = analyticsData[period].productCount;
+
+      periodElement.textContent = period;
+
+      yearButtons.forEach((btn) => {
+        if (btn.dataset.period === period) {
+          btn.classList.add("active");
+          btn.classList.remove("btn-outline-primary");
+          btn.classList.add("btn-primary");
+        } else {
+          btn.classList.remove("active");
+          btn.classList.add("btn-outline-primary");
+          btn.classList.remove("btn-primary");
+        }
+      });
+
+      if (visualChart) {
+        visualChart.data.datasets[0].data = analyticsData[period].monthlyData;
+        visualChart.update();
+      } else {
+        generateVisualization(period);
+      }
+    }
+
+    function generateVisualization(period) {
+      visualChart = new Chart(vizCanvas, {
+        type: "line",
+        data: {
+          labels: timePeriods,
+          datasets: [
+            {
+              label: "Revenue",
+              data: analyticsData[period].monthlyData,
+              backgroundColor: "rgba(78, 115, 223, 0.05)",
+              borderColor: "rgba(78, 115, 223, 1)",
+              pointRadius: 3,
+              pointBackgroundColor: "rgba(78, 115, 223, 1)",
+              pointBorderColor: "rgba(78, 115, 223, 1)",
+              pointHoverRadius: 5,
+              pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+              pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+              pointHitRadius: 10,
+              pointBorderWidth: 2,
+              tension: 0.3,
+              fill: true,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: {
+                callback: function (value) {
+                  return "₹" + value.toLocaleString();
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                callback: function(value) {
-                                    return '$' + value.toLocaleString();
-                                }
-                            },
-                            grid: {
-                                borderDash: [2],
-                                drawBorder: false,
-                                color: 'rgba(0, 0, 0, 0.1)'
-                            }
-                        },
-                        x: {
-                            grid: {
-                                display: false,
-                                drawBorder: false
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return '$' + context.parsed.y.toLocaleString();
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-        });
-    </script>
+              },
+              grid: {
+                borderDash: [2],
+                drawBorder: false,
+                color: "rgba(0, 0, 0, 0.1)",
+              },
+            },
+            x: {
+              grid: {
+                display: false,
+                drawBorder: false,
+              },
+            },
+          },
+          plugins: {
+            legend: {
+              display: false,
+            },
+            tooltip: {
+              callbacks: {
+                label: function (context) {
+                  return "₹" + context.parsed.y.toLocaleString();
+                },
+              },
+            },
+          },
+        },
+      });
+    }
+
+    yearButtons.forEach((btn) => {
+      btn.addEventListener("click", function () {
+        const period = this.dataset.period;
+        selectedPeriod = period;
+        refreshInterface(period);
+      });
+    });
+
+    refreshInterface(selectedPeriod);
+  });
+</script>

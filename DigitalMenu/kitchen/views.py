@@ -1,7 +1,10 @@
 import datetime
 
 from django.shortcuts import render
+from django.db.models import Sum, Count
 from .models import Order,OrderItem,Queue,Processing,Bill
+from kitchen.models import Order  
+from django.utils import timezone
 from admins.models import Panels
 from menu.models import Items,Tables
 from django.http import HttpResponse
@@ -57,7 +60,8 @@ def order(req):
         for x in products['plate']:
             item = Items.objects.get(id=x['id'])
             amount += (item.price*x['qty'])
-        month, year = str(datetime.datetime.now().strftime('%B'))[:3], datetime.datetime.now().year
+        month = datetime.datetime.now().strftime('%b')  
+        year = datetime.datetime.now().year
         order = Order(table=table, amount=amount,month=month,year=year)
         order.save()
         order_id = order.id
