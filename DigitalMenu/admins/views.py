@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import *
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from kitchen.models import Order
 from menu.models import Items
 from .models import Panels
@@ -10,6 +10,8 @@ from django.db.models import Sum
 from django.db.models.functions import TruncMonth
 import datetime
 # Create your views here.
+
+    
 def admin_render(req):
    
     current_year = datetime.datetime.now().year

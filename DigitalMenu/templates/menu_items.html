@@ -1,0 +1,91 @@
+<div class="container mt-4">
+    <h2>Manage Menu Items</h2>
+    
+    <form id="addMenuItemForm">
+        {% csrf_token %}
+        <input type="text" id="name" placeholder="Item Name" required>
+        <textarea id="description" placeholder="Description"></textarea>
+        <input type="number" id="price" placeholder="Price" required>
+        <input type="text" id="category" placeholder="Category">
+        <button type="submit">Add Item</button>
+    </form>
+
+    <h3>Existing Items</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Category</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="menuItemsList">
+            {% for item in items %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>{{ item.description }}</td>
+                <td>{{ item.price }}</td>
+                <td>{{ item.category }}</td>
+                <td>
+                    <button onclick="deleteItem({{ item.id }})">Delete</button>
+                    <button onclick="editItem({{ item.id }}, '{{ item.name }}', '{{ item.description }}', '{{ item.price }}', '{{ item.category }}')">Edit</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+document.getElementById('addMenuItemForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    
+    let formData = {
+        name: document.getElementById('name').value,
+        description: document.getElementById('description').value,
+        price: document.getElementById('price').value,
+        category: document.getElementById('category').value
+    };
+
+    fetch('/admin/add-menu-item/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        },
+        body: JSON.stringify(formData)
+    }).then(response => response.text())
+      .then(data => location.reload());
+});
+
+function deleteItem(id) {
+    fetch('/admin/delete-menu-item/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        },
+        body: JSON.stringify({id})
+    }).then(() => location.reload());
+}
+
+function editItem(id, name, description, price, category) {
+    let newName = prompt("Enter new name", name);
+    let newDesc = prompt("Enter new description", description);
+    let newPrice = prompt("Enter new price", price);
+    let newCategory = prompt("Enter new category", category);
+
+    fetch('/admin/update-menu-item/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        },
+        body: JSON.stringify({
+            id, name: newName, description: newDesc, price: newPrice, category: newCategory
+        })
+    }).then(() => location.reload());
+}
+</script>
