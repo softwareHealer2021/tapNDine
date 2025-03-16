@@ -33,6 +33,7 @@ urlpatterns = [
     path('kitchen/order', kitchen.order),
     path('kitchen/order/complete', kitchen.complete_order),
     path('admin/login/', admins.admin_login),
+    path('admin/logout/',admins.admin_logout),
     path('admin/', admins.admin_render),
     path('admin/add_staff', admins.admin_add_staff),
     path('admin/delete_panel', admins.admin_delete_panel),

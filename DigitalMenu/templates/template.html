@@ -11,9 +11,9 @@
 
     {% block links %}{% endblock %}
     <style>
-        .dm-header{
-            background-color:#e67e22;
-            border-color:#e67e22;
+        .dm-header {
+            background-color: #e67e22;
+            border-color: #e67e22;
         }
         {% block css %} {% endblock %}
     </style>
@@ -23,49 +23,69 @@
 <div class="container-fluid p-0 d-flex flex-column vh-100">
     <!-- Header -->
     <div class="dm-header screen-header p-3 d-flex justify-content-between align-items-center">
-      <h4 class="m-0">TapNDine</h4>
-      <span>Table #<button class="text-light" style="border:none;background-color:#e67e22;" onclick="" id="table">12</button></span>
+        <h4 class="m-0">TapNDine</h4>
+        <span>Table #<button class="text-light" style="border: none; background-color: #e67e22;" id="table">12</button></span>
     </div>
 
     <!-- Content -->
     {% block body %}{% endblock %}
+
     <!-- Bottom Navigation -->
-    <nav class="navbar-bottom py-2">
-      <div class="container">
-        <div class="row text-center">
-          <div class="col-3">
-            <a href="/menu/home" class="nav-link active d-flex flex-column align-items-center">
+<!-- Bottom Navigation -->
+<nav class="navbar-bottom py-2">
+  <div class="container">
+      <div class="d-flex justify-content-around text-center">
+          <a href="/menu/home" class="nav-link active d-flex flex-column align-items-center">
               <div class="navbar-icon"><i class="bi bi-book"></i></div>
               Menu
-            </a>
-          </div>
-          <div class="col-3">
-            <a href="/menu/plate" class="nav-link text-dark d-flex flex-column align-items-center">
+          </a>
+          <a href="/menu/plate" class="nav-link text-dark d-flex flex-column align-items-center position-relative">
               <div class="navbar-icon"><i class="bi bi-basket"></i></div>
               My Plate
-            </a>
-          </div>
-          <div class="col-3">
-            <a href="/menu/order" class="nav-link text-dark d-flex flex-column align-items-center">
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="plate-badge">
+                  0
+              </span>
+          </a>
+          <a href="/menu/order" class="nav-link text-dark d-flex flex-column align-items-center">
               <div class="navbar-icon"><i class="bi bi-clock-history"></i></div>
               Order Status
-            </a>
-          </div>
-          <div class="col-3">
-            <a href="/menu/plate" class="nav-link text-dark d-flex flex-column align-items-center">
-              <div class="navbar-icon"><i class="bi bi-question-circle"></i></div>
-              Help
-            </a>
-          </div>
-        </div>
+          </a>
       </div>
-    </nav>
   </div>
+</nav>
+
+</div>
+
 <form>
     {% csrf_token %}
 </form>
-</body>
+
+<!-- JavaScript Section -->
 <script>
+    function updatePlateBadge() {
+        const plate = JSON.parse(localStorage.getItem('plate')) || [];
+        let totalItems = 0;
+
+        // Calculate total quantity of all items
+        plate.forEach(item => {
+            totalItems += item.qty;
+        });
+
+        // Update the badge
+        const badge = document.getElementById('plate-badge');
+        if (badge) {
+            badge.textContent = totalItems;
+            // Hide badge if there are no items
+            badge.style.display = totalItems > 0 ? 'block' : 'none';
+        }
+    }
+
+    // Call this when page loads
+    document.addEventListener('DOMContentLoaded', function () {
+        updatePlateBadge();
+    });
+
     {% block script %}{% endblock %}
 </script>
+</body>
 </html>

@@ -6,7 +6,7 @@ class Panels(models.Model):
     upass = models.CharField(max_length=50)
 
 class Admin(models.Model):
-    admin = models.CharField(max_length=25).primary_key
+    admin = models.CharField(max_length=25, unique=True)
     password = models.CharField(max_length=50)
 
 class Metrics(models.Model):

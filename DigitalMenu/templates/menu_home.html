@@ -37,41 +37,77 @@
 </div>
 {% endblock %}
 {% block script %}
-    const categories = Array.from(document.getElementsByClassName('category'));
-    const items = Array.from(document.getElementsByClassName('items'));
-    categories.forEach(category => {
-        category.addEventListener('click',function (){
-            categories.forEach(category=>{category.classList.remove('active')});
-            items.forEach(item=>{
-                if(this.getAttribute('data-category')==item.getAttribute("data-category"))
-                    item.style.display = 'block';
-                else
-                    item.style.display = 'none';
-            });
-            category.classList.add('active');
+const categories = Array.from(document.getElementsByClassName('category'));
+const items = Array.from(document.getElementsByClassName('items'));
+categories.forEach(category => {
+    category.addEventListener('click',function (){
+        categories.forEach(category=>{category.classList.remove('active')});
+        items.forEach(item=>{
+            if(this.getAttribute('data-category')==item.getAttribute("data-category"))
+                item.style.display = 'block';
+            else
+                item.style.display = 'none';
         });
+        category.classList.add('active');
     });
-    const btns = Array.from(document.getElementsByClassName('add-btn'));
-    btns.forEach(btn => {
-        btn.addEventListener('click',function(){
-            item = new Object();
-            item.id = this.id;
-            item.qty = 1;
-            item.price = Number(this.getAttribute('data-price'));
-            if(localStorage.getItem('plate') == null){
-                let plate = [];
+});
+
+
+const btns = Array.from(document.getElementsByClassName('add-btn'));
+btns.forEach(btn => {
+    // Check localStorage when page loads to update button state
+    const plate = JSON.parse(localStorage.getItem('plate')) || [];
+    const itemInPlate = plate.some(item => item.id === btn.id);
+    if (itemInPlate) {
+        btn.innerHTML = "Added to plate";
+    }
+    
+    btn.addEventListener('click',function(){
+        localStorage.setItem('scrollPosition', window.pageYOffset);
+        
+
+        const activeCategory = document.querySelector('.category.active').getAttribute('data-category');
+        localStorage.setItem('activeCategory', activeCategory);
+        
+
+        item = new Object();
+        item.id = this.id;
+        item.qty = 1;
+        item.price = Number(this.getAttribute('data-price'));
+        if(localStorage.getItem('plate') == null){
+            let plate = [];
+            plate.push(item);
+            localStorage.setItem('plate',JSON.stringify(plate));
+        }
+        else{
+            let plate = JSON.parse(localStorage.getItem('plate'));
+            pl = plate.filter(it=>it.id==item.id);
+            console.log(pl);
+            if(pl.length == 0 || pl == undefined)
                 plate.push(item);
-                localStorage.setItem('plate',JSON.stringify(plate));
-            }
-            else{
-                let plate = JSON.parse(localStorage.getItem('plate'));
-                pl = plate.filter(it=>it.id==item.id);
-                console.log(pl);
-                if(pl.length == 0 || pl == undefined)
-                    plate.push(item);
-                localStorage.setItem('plate',JSON.stringify(plate));
-            }
-            btn.innerHTML = "Added to plate";
-        })
+            localStorage.setItem('plate',JSON.stringify(plate));
+        }
+        btn.innerHTML = "Added to plate";
+        
+        window.location.reload();
     });
+});
+
+// Restore scroll position when page loads
+window.addEventListener('load', function() {
+    const scrollPosition = localStorage.getItem('scrollPosition');
+    if (scrollPosition) {
+        window.scrollTo(0, parseInt(scrollPosition));
+        
+    }
+    
+
+    const activeCategory = localStorage.getItem('activeCategory');
+    if (activeCategory) {
+        const categoryBtn = document.querySelector(`.category[data-category="${activeCategory}"]`);
+        if (categoryBtn) {
+            categoryBtn.click();
+        }
+    }
+});
 {% endblock %}

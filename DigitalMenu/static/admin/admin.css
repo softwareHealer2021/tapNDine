@@ -72,3 +72,7 @@ body {
       border-radius: 50%;
       margin-right: 10px;
     }
+    .badge {
+      font-size: 0.7rem;
+      padding: 0.2rem 0.5rem;
+    }

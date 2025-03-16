@@ -104,6 +104,9 @@
                 }
             });
             setPlate(plate);
+            
+            // Update the badge
+            updatePlateBadge();
         });
     });
     function calculateTotal(){
@@ -118,32 +121,35 @@
         document.getElementById('tax').innerHTML = tax;
     }
     async function placeOrder() {
-    let order;
-    let plate = JSON.parse(localStorage.getItem('plate'));
-    let table = Number(document.getElementById('table').innerHTML);
-    const csrfTokenElement = document.querySelector('input[name="csrfmiddlewaretoken"]');
-    const csrftoken = csrfTokenElement.value;
-
-    try {
-        const response = await fetch('/kitchen/order', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': csrftoken,
-            },
-            body: JSON.stringify({'plate': plate, 'table': table}),
-        });
-
-        const data = await response.text();  // Assuming response is just text
-        order = Number(data);  // Convert the response to a number
-
-        // Clear localStorage and navigate after order is received
-        localStorage.clear();
-        window.location.replace('/menu/order?t=' + table + '&o=' + order);  // Make sure to add the '&' between query params
-    } catch (error) {
-        console.error("Error placing the order:", error);
+        let order;
+        let plate = JSON.parse(localStorage.getItem('plate'));
+        let table = Number(document.getElementById('table').innerHTML);
+        const csrfTokenElement = document.querySelector('input[name="csrfmiddlewaretoken"]');
+        const csrftoken = csrfTokenElement.value;
+    
+        try {
+            const response = await fetch('/kitchen/order', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': csrftoken,
+                },
+                body: JSON.stringify({'plate': plate, 'table': table}),
+            });
+    
+            const data = await response.text();  
+            order = Number(data);
+    
+            // Clear localStorage and update badge
+            localStorage.clear();
+            updatePlateBadge(); // Ensure this function exists and properly updates the UI
+    
+            // Redirect after order is placed
+            window.location.replace('/menu/order?t=' + table + '&o=' + order);
+        } catch (error) {
+            console.error("Error placing the order:", error);
+        }
     }
-}
+    
 
 {% endblock %}
-

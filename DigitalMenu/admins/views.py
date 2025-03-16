@@ -1,40 +1,68 @@
-from django.shortcuts import render
-from .models import *
+from django.shortcuts import render, redirect
+from .models import Admin, Panels, Metrics
 from django.http import HttpResponse, JsonResponse
 from kitchen.models import Order
 from menu.models import Items
-from .models import Panels
-from django.shortcuts import render, redirect
+from functools import wraps
 import json
-from django.db.models import Sum
-from django.db.models.functions import TruncMonth
 import datetime
-# Create your views here.
 
-    
+
+def admin_login_required(view_function):
+    @wraps(view_function)
+    def wrapped_view(request, *args, **kwargs):
+        if 'admin_user' not in request.session:
+            return redirect('/admin/login/')
+        return view_function(request, *args, **kwargs)
+    return wrapped_view
+
+def admin_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        try:
+            admin_user = Admin.objects.get(admin=username)
+
+            if admin_user.password == password:
+                request.session['admin_user'] = username
+                
+                request.session.set_expiry(43200)
+                return redirect('/admin/')
+            else:
+                return render(request, 'admin_login.html', {
+                    'error': 'Invalid password. Please try again.'
+                })
+        except Admin.DoesNotExist:
+            return render(request, 'admin_login.html', {
+                'error': 'User not found.'
+            })
+
+    return render(request, 'admin_login.html')
+
+def admin_logout(request):
+    if 'admin_user' in request.session:
+        del request.session['admin_user']
+    return redirect('/admin/login/')
+
+@admin_login_required
 def admin_render(req):
-   
     current_year = datetime.datetime.now().year
     last_year = current_year - 1
     
-
     all_orders = Order.objects.all()
     
- 
     current_year_orders = all_orders.filter(year=current_year)
     previous_year_orders = all_orders.filter(year=last_year)
     
-
     total_orders = len(current_year_orders)
     total_earnings = sum(order.amount for order in current_year_orders)
     total_panels = len(Panels.objects.all())
     total_items = len(Items.objects.all())
     
-  
     previous_year_order_count = len(previous_year_orders)
     previous_year_earnings = sum(order.amount for order in previous_year_orders)
     
-
     previous_year_panels = total_panels
     previous_year_items = total_items
     
@@ -43,14 +71,11 @@ def admin_render(req):
         str(last_year): [0] * 12
     }
     
-
     for order in current_year_orders:
-     
         month_idx = get_month_index(order.month)
         if 0 <= month_idx < 12:
             monthly_data[str(current_year)][month_idx] += order.amount
     
-
     for order in previous_year_orders:
         month_idx = get_month_index(order.month)
         if 0 <= month_idx < 12:
@@ -72,7 +97,6 @@ def admin_render(req):
                 earnings=sum(order.amount for order in all_orders)
             ).save()
     
-
     panels = Panels.objects.all()
     panel_data = [{'user': p.user, 'pass': p.upass} for p in panels]
     
@@ -103,69 +127,22 @@ def get_month_index(month):
     ]
     
     if isinstance(month, str):
-        month_str = month.lower()[:3]  # First 3 chars of month name
+        month_str = month.lower()[:3]  
         if month_str in month_names:
             return month_names.index(month_str)
     
-    # Default to current month if invalid
     return datetime.datetime.now().month - 1
-    orders = earnings = panels = items = 0
-    if (not len(Metrics.objects.all())) or len(Order.objects.all()) != Metrics.objects.all()[0].orders:
-        orders = len(Order.objects.all())
-        earnings = sum([x['amount'] for x in list(Order.objects.all().values('amount'))])
-        panels = len(Panels.objects.all())
-        items = len(Items.objects.all())
-        Metrics(orders=orders,panels=panels,items=items,earnings=earnings).save()
-    panels = Panels.objects.all()
-    metrics = Metrics.objects.all()[0]
-    data={
-        'total_orders':metrics.orders,
-        'total_items':metrics.items,
-        'total_panels':metrics.panels,
-        'total_earnings':metrics.earnings,
-        'panels':[]
-    }
-    for x in panels:
-        data['panels'].append({
-            'user':x.user,
-            'pass':x.upass,
-        })
-    return render(req,'admin_template.html',data)
 
-
+@admin_login_required
 def admin_add_staff(req):
     panel = req.body.decode()
     panel = json.loads(panel)
-    Panels(user=panel['email'],upass=panel['password']).save()
+    Panels(user=panel['email'], upass=panel['password']).save()
     return HttpResponse("Success")
 
+@admin_login_required
 def admin_delete_panel(req):
     panel = req.body.decode()
     panel = json.loads(panel)
     Panels.objects.get(user=panel['panel']).delete()
     return HttpResponse("Success")
-
-def admin_login(request):
-    
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        
-        try:
-            panel_user = Panels.objects.get(user=username)
-            
-            if panel_user.upass == password:
-                request.session['admin_user'] = username
-                
-           
-                return redirect('/admin/') 
-            else:
-                return render(request, 'admin_login.html', {
-                    'error': 'Invalid password. Please try again.'
-                })
-        except Panels.DoesNotExist:
-            return render(request, 'admin_login.html', {
-                'error': 'User not found.'
-            })
-
-    return render(request, 'admin_login.html')
