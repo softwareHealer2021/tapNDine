@@ -8,45 +8,22 @@ import json
 import datetime
 
 
-def admin_login_required(view_function):
-    @wraps(view_function)
-    def wrapped_view(request, *args, **kwargs):
-        if 'admin_user' not in request.session:
-            return redirect('/admin/login/')
-        return view_function(request, *args, **kwargs)
-    return wrapped_view
 
-def admin_login(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-
-        try:
-            admin_user = Admin.objects.get(admin=username)
-
-            if admin_user.password == password:
-                request.session['admin_user'] = username
-                
-                request.session.set_expiry(43200)
-                return redirect('/admin/')
-            else:
-                return render(request, 'admin_login.html', {
-                    'error': 'Invalid password. Please try again.'
-                })
-        except Admin.DoesNotExist:
-            return render(request, 'admin_login.html', {
-                'error': 'User not found.'
-            })
-
-    return render(request, 'admin_login.html')
+def admin_login(request,id,password):
+    obj = Admin.objects.filter(admin=id,password=password)
+    return obj
 
 def admin_logout(request):
     if 'admin_user' in request.session:
         del request.session['admin_user']
-    return redirect('/admin/login/')
+    return redirect('/')
 
-@admin_login_required
+
 def admin_render(req):
+    if 'admin_user' in req.session:
+        pass
+    else:
+        return redirect('/')
     current_year = datetime.datetime.now().year
     last_year = current_year - 1
     
@@ -133,14 +110,12 @@ def get_month_index(month):
     
     return datetime.datetime.now().month - 1
 
-@admin_login_required
 def admin_add_staff(req):
     panel = req.body.decode()
     panel = json.loads(panel)
     Panels(user=panel['email'], upass=panel['password']).save()
     return HttpResponse("Success")
 
-@admin_login_required
 def admin_delete_panel(req):
     panel = req.body.decode()
     panel = json.loads(panel)

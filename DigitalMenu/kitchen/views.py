@@ -1,6 +1,6 @@
 import datetime
 
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.db.models import Sum, Count
 from .models import Order,OrderItem,Queue,Processing,Bill
 from kitchen.models import Order  
@@ -11,26 +11,35 @@ from django.http import HttpResponse
 
 # Create your views here.
 def home(req):
+    if not 'panel_user' in req.session:
+        return redirect('/')
     queue = Queue.objects.values('order_id')
     queue = list(queue)
     if not queue:
         return render(req,'kitchen.html')
     queue.reverse()
+    data = {
+        'queue':[],
+        "current":[],
+    }
     if not len(Processing.objects.all()):
         live = queue.pop()
         Queue.objects.filter(order_id=live['order_id']).delete()
         current=Processing(order_id=live['order_id'])
+        order_obj = Order.objects.get(id=current.order_id)
+        order_obj.status = "processing"
+        order_obj.save()
         current.save()
+        data["current_table"] = Order(id=current.order_id).table
+        data["current_id"] = current.order_id
+        print(Order(id=current.order_id).table)
     else:
         current = Processing.objects.all()
         current = current[0]
-    data = {
-        'queue':[],
-        "current":[],
-        "current_table":Order(id=current.order_id).table,
-        "current_id":current.order_id,
-        "orders":len(queue),
-    }
+        data["current_table"] = Order.objects.get(id=current.order_id).table
+        data["current_id"] = current.order_id
+
+    data["orders"]=len(queue)
     for x in queue:
         items = len(OrderItem.objects.filter(order=x['order_id']))
         table = Order.objects.get(id=x['order_id']).table
@@ -70,8 +79,21 @@ def order(req):
             OrderItem(item= item.id,order = order.id,quantity = x['qty']).save()
         Queue(order_id=order.id).save()
         return HttpResponse(order_id)
+    else:
+        return redirect('/kitchen')
     return HttpResponse("")
 
 def complete_order(req):
-    Processing.objects.all().delete()
+    if Processing.objects.all():
+        order_id = Processing.objects.all()[0].order_id
+        order_obj = Order.objects.get(id=order_id)
+        order_obj.status = "completed"
+        order_obj.save()
+        Processing.objects.all().delete()
+    else:
+        return redirect('/kitchen')
     return HttpResponse("Success")
+
+def logout(req):
+    del req.session['panel_user']
+    return redirect('/')

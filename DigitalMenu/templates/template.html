@@ -35,18 +35,18 @@
 <nav class="navbar-bottom py-2">
   <div class="container">
       <div class="d-flex justify-content-around text-center">
-          <a href="/menu/home" class="nav-link active d-flex flex-column align-items-center">
+          <a href="/menu/home" class="footer nav-link d-flex flex-column align-items-center" data-index="0">
               <div class="navbar-icon"><i class="bi bi-book"></i></div>
               Menu
           </a>
-          <a href="/menu/plate" class="nav-link text-dark d-flex flex-column align-items-center position-relative">
+          <a href="/menu/plate" class="footer nav-link text-dark d-flex flex-column align-items-center position-relative" data-index="1">
               <div class="navbar-icon"><i class="bi bi-basket"></i></div>
               My Plate
               <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="plate-badge">
                   0
               </span>
           </a>
-          <a href="/menu/order" class="nav-link text-dark d-flex flex-column align-items-center">
+          <a href="/menu/order" class="footer nav-link text-dark d-flex flex-column align-items-center" data-index="2">
               <div class="navbar-icon"><i class="bi bi-clock-history"></i></div>
               Order Status
           </a>
@@ -79,10 +79,25 @@
             badge.style.display = totalItems > 0 ? 'block' : 'none';
         }
     }
-
+    var footer = document.querySelectorAll('.footer');
+    Array.from(footer).forEach(tab=>{
+        tab.addEventListener('click',()=>{
+            sessionStorage.setItem('footer-index',tab.getAttribute('data-index'));
+        });
+    })
+    function removeFooterActive(){
+        Array.from(footer).forEach(tab=>tab.classList.remove('active'));
+    }
     // Call this when page loads
     document.addEventListener('DOMContentLoaded', function () {
         updatePlateBadge();
+        removeFooterActive();
+        if(sessionStorage.getItem('footer-index')==undefined)sessionStorage.setItem('footer-index','0');
+        Array.from(footer).forEach(tab=>{
+            if(tab.getAttribute('data-index')==sessionStorage.getItem('footer-index')){
+                tab.classList.add('active');
+            }
+        })
     });
 
     {% block script %}{% endblock %}

@@ -126,7 +126,6 @@
         let table = Number(document.getElementById('table').innerHTML);
         const csrfTokenElement = document.querySelector('input[name="csrfmiddlewaretoken"]');
         const csrftoken = csrfTokenElement.value;
-    
         try {
             const response = await fetch('/kitchen/order', {
                 method: 'POST',
@@ -150,6 +149,6 @@
             console.error("Error placing the order:", error);
         }
     }
-    
+
 
 {% endblock %}
