@@ -6,7 +6,6 @@ class Order(models.Model):
     id = models.AutoField().primary_key
     table = models.IntegerField(default=0)
     amount = models.IntegerField(default=0)
-    status = models.CharField(max_length=10,default='in queue')
     date = models.DateField(auto_now_add=True)
     month = models.CharField(max_length=10,default=0)
     year = models.IntegerField(default=0)

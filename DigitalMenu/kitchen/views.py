@@ -13,22 +13,110 @@ from django.http import HttpResponse
 def home(req):
     if not 'panel_user' in req.session:
         return redirect('/')
-    queue1 = list(Queue1.objects.all())
-    queue2 = list(Queue1.objects.all())
-    queue3 = list(Queue1.objects.all())
-    queue4 = list(Queue1.objects.all())
-    print(queue1,queue2,queue3,queue4)
+    queue1 = []
+    queue5 = []
+    queue10 = []
+    queue15 = []
     data = {
-        'queue1':[],
-        'queue5':[],
-        'queue10':[],
-        'queue15':[],
-        "current1":[],
-        "current5":[],
-        "current10":[],
-        "current15":[],
+        "current1":{},
+        "current5":{},
+        "current10":{},
+        "current15":{},
     }
-
+    order_items = []
+    if len(Queue1.objects.all()):
+        for x in list(Queue1.objects.all()):
+            queue1.append({"order_id":x.order_id,"table_id":x.table_id,"item_id":x.item_id,})
+        queue1 = sorted(queue1, key=lambda x: x['order_id'],reverse=True)
+        if not len(Processing1.objects.all()):
+            live = queue1.pop()
+            Queue1.objects.filter(order_id=live['order_id'],item_id=live['item_id'],table_id=live['table_id']).delete()
+            current=Processing1(order_id=live['order_id'],item_id=live['item_id'],table_id=live['table_id'])
+            order_obj = Order.objects.get(id=current.order_id)
+            current.save()
+            data["current1_id"] = current.order_id
+            data["current1_table"] = current.table_id
+            order_items.append(current.item_id)
+        else:
+            current = Processing1.objects.all()[0]
+            data["current_table"] = current.table_id
+            data["current_id"] = current.order_id
+            order_items.append(current.item_id)
+        data['current1'] = {
+            "url": Items.objects.get(id=order_items[0]).image,
+            "name": Items.objects.get(id=order_items[0]).name,
+            "table": Processing1.objects.all()[0].table_id
+        }
+    if len(Queue5.objects.all()):
+        for x in list(Queue5.objects.all()):
+            queue5.append({"order_id":x.order_id,"table_id":x.table_id,"item_id":x.item_id,})
+        queue5 = sorted(queue5, key=lambda x: x['order_id'],reverse=True)
+        if not len(Processing5.objects.all()):
+            live = queue5.pop()
+            Queue5.objects.filter(order_id=live['order_id'],item_id=live['item_id'],table_id=live['table_id']).delete()
+            current=Processing5(order_id=live['order_id'],item_id=live['item_id'],table_id=live['table_id'])
+            order_obj = Order.objects.get(id=current.order_id)
+            current.save()
+            data["current5_id"] = current.order_id
+            data["current5_table"] = current.table_id
+            order_items.append(current.item_id)
+        else:
+            current = Processing1.objects.all()[0]
+            data["current5_id"] = current.order_id
+            data["current5_table"] = current.table_id
+            order_items.append(current.item_id)
+        data['current5'] = {
+            "url": Items.objects.get(id=order_items[0]).image,
+            "name": Items.objects.get(id=order_items[0]).name,
+            "table": Processing5.objects.all()[0].table_id
+        }
+    if len(Queue10.objects.all()):
+        for x in list(Queue10.objects.all()):
+            queue10.append({"order_id":x.order_id,"table_id":x.table_id,"item_id":x.item_id,})
+        queue10 = sorted(queue10, key=lambda x: x['order_id'],reverse=True)
+        if not len(Processing10.objects.all()):
+            live = queue10.pop()
+            Queue10.objects.filter(order_id=live['order_id'],item_id=live['item_id'],table_id=live['table_id']).delete()
+            current=Processing10(order_id=live['order_id'],item_id=live['item_id'],table_id=live['table_id'])
+            order_obj = Order.objects.get(id=current.order_id)
+            current.save()
+            data["current10_id"] = current.order_id
+            data["current10_table"] = current.table_id
+            order_items.append(current.item_id)
+        else:
+            current = Processing1.objects.all()[0]
+            data["current10_id"] = current.order_id
+            data["current10_table"] = current.table_id
+            order_items.append(current.item_id)
+        data['current10'] = {
+            "url": Items.objects.get(id=order_items[0]).image,
+            "name": Items.objects.get(id=order_items[0]).name,
+            "table": Processing10.objects.all()[0].table_id
+        }
+    if len(Queue15.objects.all()):
+        for x in list(Queue15.objects.all()):
+            queue15.append({"order_id":x.order_id,"table_id":x.table_id,"item_id":x.item_id,})
+        queue15 = sorted(queue15, key=lambda x: x['order_id'],reverse=True)
+        if not len(Processing15.objects.all()):
+            live = queue15.pop()
+            Queue15.objects.filter(order_id=live['order_id'],item_id=live['item_id'],table_id=live['table_id']).delete()
+            current=Processing15(order_id=live['order_id'],item_id=live['item_id'],table_id=live['table_id'])
+            order_obj = Order.objects.get(id=current.order_id)
+            current.save()
+            data["current15_id"] = current.order_id
+            data["current15_table"] = current.table_id
+            order_items.append(current.item_id)
+        else:
+            current = Processing1.objects.all()[0]
+            data["current15_id"] = current.order_id
+            data["current15_table"] = current.table_id
+            order_items.append(current.item_id)
+        data['current15'] = {
+            "url":Items.objects.get(id=order_items[0]).image,
+            "name":Items.objects.get(id=order_items[0]).name,
+            "table":Processing15.objects.all()[0].table_id
+        }
+    data["orders"]=(len(queue1)+len(queue5)+len(queue10)+len(queue15))
     return render(req,'kitchen.html')
 
 def order(req):
@@ -54,25 +142,25 @@ def order(req):
             time = item.ptime
             match time:
                 case 1:
-                    Queue1(order_id=order_id,table=table,item_id=item.id).save()
+                    Queue1(order_id=order_id,table_id=table,item_id=item.id).save()
                 case 5:
-                    Queue5(order_id=order_id,table=table,item_id=item.id).save()
+                    Queue5(order_id=order_id,table_id=table,item_id=item.id).save()
                 case 10:
-                    Queue10(order_id=order_id,table=table,item_id=item.id).save()
+                    Queue10(order_id=order_id,table_id=table,item_id=item.id).save()
                 case 15:
-                    Queue15(order_id=order_id,table=table,item_id=item.id).save()
+                    Queue15(order_id=order_id,table_id=table,item_id=item.id).save()
         return HttpResponse(order_id)
     else:
         return redirect('/kitchen')
     return HttpResponse("")
 
 def complete_order(req):
-    if Processing.objects.all():
-        order_id = Processing.objects.all()[0].order_id
+    if Processing1.objects.all():
+        order_id = Processing1.objects.all()[0].order_id
         order_obj = Order.objects.get(id=order_id)
         order_obj.status = "completed"
         order_obj.save()
-        Processing.objects.all().delete()
+        Processing1.objects.all().delete()
     else:
         return redirect('/kitchen')
     return HttpResponse("Success")

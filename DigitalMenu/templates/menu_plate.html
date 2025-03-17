@@ -138,9 +138,10 @@
     
             const data = await response.text();  
             order = Number(data);
+            console.log(order);
     
             // Clear localStorage and update badge
-            localStorage.clear();
+<!--            localStorage.clear();-->
             updatePlateBadge(); // Ensure this function exists and properly updates the UI
     
             // Redirect after order is placed

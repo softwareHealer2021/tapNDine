@@ -54,7 +54,6 @@ def order(req):
         'items':[]
     }
     data['order']['amount'] = order.amount
-    data['order']['status'] = order.status
     for x in order_items:
         item = Items.objects.get(id=x.item)
         data['items'].append({
