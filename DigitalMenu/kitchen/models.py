@@ -37,8 +37,25 @@ class Queue15(models.Model):
     table_id = models.IntegerField(default=0)
     item_id = models.IntegerField(default=0)
 
-class Processing(models.Model):
+class Processing1(models.Model):
     order_id = models.IntegerField(default=0)
+    table_id = models.IntegerField(default=0)
+    item_id = models.IntegerField(default=0)
+
+class Processing10(models.Model):
+    order_id = models.IntegerField(default=0)
+    table_id = models.IntegerField(default=0)
+    item_id = models.IntegerField(default=0)
+
+class Processing15(models.Model):
+    order_id = models.IntegerField(default=0)
+    table_id = models.IntegerField(default=0)
+    item_id = models.IntegerField(default=0)
+
+class Processing5(models.Model):
+    order_id = models.IntegerField(default=0)
+    table_id = models.IntegerField(default=0)
+    item_id = models.IntegerField(default=0)
 
 class Bill(models.Model):
     order_id = models.IntegerField(default=0)
