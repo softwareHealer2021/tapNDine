@@ -2,6 +2,13 @@ from django.db import models
 
 # Create your models here.
 class Items(models.Model):
+    PTIME_CHOICES = [
+        (1, '1 min'),
+        (5, '5 min'),
+        (10, '10 min'),
+        (15, '15 min'),
+    ]
+    ptime = models.IntegerField(choices=PTIME_CHOICES,default = 5)
     id = models.AutoField().primary_key
     name = models.CharField(max_length=25)
     description = models.TextField()
