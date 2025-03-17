@@ -1,5 +1,5 @@
 import datetime
-
+import json
 from django.shortcuts import render,redirect
 from django.db.models import Sum, Count
 from .models import Order,OrderItem,Queue1,Queue5,Queue10,Queue15,Processing1,Processing5,Processing10,Processing15,Bill
@@ -120,7 +120,6 @@ def home(req):
     return render(req,'kitchen.html')
 
 def order(req):
-    import json
     products = req.body.decode()
     if products:
         products = json.loads(products)
@@ -152,15 +151,20 @@ def order(req):
         return HttpResponse(order_id)
     else:
         return redirect('/kitchen')
-    return HttpResponse("")
 
-def complete_order(req):
-    if Processing1.objects.all():
-        order_id = Processing1.objects.all()[0].order_id
-        order_obj = Order.objects.get(id=order_id)
-        order_obj.status = "completed"
-        order_obj.save()
-        Processing1.objects.all().delete()
+def complete_order(request):
+    Processing = request.body.decode()
+    if Processing:
+        section = json.loads(Processing)
+        match int(section['section']):
+            case 1:
+                Processing1.objects.all().delete()
+            case 5:
+                Processing5.objects.all().delete()
+            case 10:
+                Processing10.objects.all().delete()
+            case 15:
+                Processing15.objects.all().delete()
     else:
         return redirect('/kitchen')
     return HttpResponse("Success")
