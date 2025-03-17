@@ -60,6 +60,7 @@ def order(req):
             "name":item.name,
             "qty":x.quantity,
             "url":item.image.url,
+            "wt":item.ptime
         })
     return render(req,'menu_order.html',data)
 
