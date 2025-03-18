@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Categories,Items
-from kitchen.models import Order,OrderItem
+from kitchen.models import Order,OrderItem,Queue1,Queue5,Queue10,Queue15
 # Create your views here.
 
 def home(req):
@@ -56,11 +56,21 @@ def order(req):
     data['order']['amount'] = order.amount
     for x in order_items:
         item = Items.objects.get(id=x.item)
+        wt = 0
+        match item.ptime:
+            case 1:
+                wt = item.ptime + (1 * min(1,Queue1.objects.count()))
+            case 5:
+                wt = item.ptime + (1 * min(1,Queue5.objects.count()))
+            case 10:
+                wt = item.ptime + (1 * min(1,Queue10.objects.count()))
+            case 15:
+                wt = item.ptime + (1 * min(1,Queue15.objects.count()))
         data['items'].append({
             "name":item.name,
             "qty":x.quantity,
             "url":item.image.url,
-            "wt":item.ptime
+            "wt":wt
         })
     return render(req,'menu_order.html',data)
 

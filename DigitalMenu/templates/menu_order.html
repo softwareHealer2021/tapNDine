@@ -15,24 +15,121 @@
     <h5 class="mb-3 alert alert-success text-center">You have successfully placed the order and will be arriving soon</h5>
     <!-- Order Items -->
     {% for item in items %}
-    <div class="card mb-3">
+    <div class="card mb-3" data-prep-time="{{ item.wt }}">
         <div class="card-body p-3">
             <div class="d-flex">
                 <div class="item-image-placeholder rounded me-3 flex-shrink-0">
                     <img src="{{item.url}}" alt="" class="food-img" width="100%" height="100%"/>
                 </div>
-                <div>
+                <div class="flex-grow1">
                     <h5 class="card-title mb-1">{{item.name}}</h5>
 <!--                    <p class="card-text item-status mb-1">{{order.status}}</p>-->
-                    <p class="card-text eta mb-0">Waiting Time:{{item.wt}} minute(s)</p>
+                    <p class="card-text eta mb-1">Preparation:{{item.wt}} minute(s)</p>
+                    <div class="item-countdown" style="width:80vw">
+                        <div class="progress" style="height: 8px;">
+                            <div class="progress-bar countdown-progress bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <div class="d-flex justify-content-between mt-1">
+                            <span>Remaining: <span class="time-remaining time-display">{{ item.wt }}:00</span></span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     {% endfor %}
     {% else %}
-        <div class="alert alert-warning text-center h3" style="margin-top:35%">You have not made any order...!</div>
+        <div class="alert alert-warning text-center h3">You have not made any order...!</div>
     {% endif %}
 </div>
 {% endblock %}
+{% block script %}
 
+document.addEventListener('DOMContentLoaded', function() {
+    // Only run if we have an order
+    if (document.querySelector('[data-prep-time]')) {
+        initializeCountdowns();
+    }
+});
+
+function initializeCountdowns() {
+    // Get all items with preparation times
+    const itemCards = document.querySelectorAll('[data-prep-time]');
+
+    // Check if we have stored start times
+    let startTimes = JSON.parse(sessionStorage.getItem('orderStartTimes')) || {};
+    const orderId = new URLSearchParams(window.location.search).get('o');
+
+    // If this is a new order or we don't have stored times
+    if (!startTimes[orderId]) {
+        startTimes[orderId] = {};
+        const now = Date.now();
+
+        // Initialize start times for each item
+        itemCards.forEach(card => {
+            const itemId = card.dataset.itemId;
+            startTimes[orderId][itemId] = now;
+        });
+
+        // Save to session storage
+        sessionStorage.setItem('orderStartTimes', JSON.stringify(startTimes));
+    }
+
+    // Start countdown for each item
+    itemCards.forEach(card => {
+        const itemId = card.dataset.itemId;
+        const prepTimeMinutes = parseInt(card.dataset.prepTime);
+        const startTime = startTimes[orderId][itemId];
+
+        startCountdown(card, prepTimeMinutes, startTime);
+    });
+}
+
+function startCountdown(card, prepTimeMinutes, startTime) {
+    const progressBar = card.querySelector('.countdown-progress');
+    const timeRemainingEl = card.querySelector('.time-remaining');
+    const totalSeconds = prepTimeMinutes * 60;
+    const endTime = startTime + (totalSeconds * 1000);
+
+    // Update every second
+    const timer = setInterval(() => {
+        const now = Date.now();
+        const elapsedMs = now - startTime;
+        const remainingMs = endTime - now;
+
+        if (remainingMs <= 0) {
+            clearInterval(timer);
+            progressBar.style.width = "0%";
+            timeRemainingEl.textContent = "Ready to serve!";
+            progressBar.classList.remove('bg-success', 'bg-warning');
+            progressBar.classList.add('bg-danger');
+            return;
+        }
+
+        // Calculate remaining time
+        const remainingSeconds = Math.floor(remainingMs / 1000);
+        const minutes = Math.floor(remainingSeconds / 60);
+        const seconds = remainingSeconds % 60;
+
+        // Update the display
+        timeRemainingEl.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+        // Update progress bar
+        const percentComplete = 100 - ((remainingMs / (totalSeconds * 1000)) * 100);
+        progressBar.style.width = (100 - percentComplete) + "%";
+
+        // Change color based on time remaining
+        if (percentComplete > 75) {
+            progressBar.classList.remove('bg-success', 'bg-warning');
+            progressBar.classList.add('bg-danger');
+        } else if (percentComplete > 50) {
+            progressBar.classList.remove('bg-success', 'bg-danger');
+            progressBar.classList.add('bg-warning');
+        }
+    }, 1000);
+}
+
+
+
+
+{% endblock %}

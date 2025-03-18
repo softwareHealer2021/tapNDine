@@ -81,6 +81,7 @@
         document.getElementById('qty'+item.id).innerHTML = item.qty;
     })
     document.body.onload = function(){
+        console.log();
         filterItems();
         calculateTotal();
     }
@@ -136,16 +137,18 @@
                 body: JSON.stringify({'plate': plate, 'table': table}),
             });
     
-            const data = await response.text();  
-            order = Number(data);
-            console.log(order);
+            const data = await response.text();
     
             // Clear localStorage and update badge
-<!--            localStorage.clear();-->
+<!--            if(localStorage.getItem('orders')==undefined)-->
+<!--                localStorage.setItem('orders',localStorage.getItem('plate'));-->
+<!--            else-->
+<!--                localStorage.setItem('orders',JSON.stringify(JSON.parse(localStorage.getItem('orders')).concat(JSON.parse(localStorage.getItem('plate')))));-->
+            localStorage.clear();
             updatePlateBadge(); // Ensure this function exists and properly updates the UI
     
             // Redirect after order is placed
-            window.location.replace('/menu/order?t=' + table + '&o=' + order);
+            window.location.replace('/menu/order?t=' + table + '&o=' + Number(data));
         } catch (error) {
             console.error("Error placing the order:", error);
         }

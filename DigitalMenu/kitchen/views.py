@@ -7,7 +7,7 @@ from kitchen.models import Order
 from django.utils import timezone
 from admins.models import Panels
 from menu.models import Items,Tables
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse
 
 # Create your views here.
 def home(req):
